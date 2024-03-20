@@ -1,0 +1,30 @@
+version: "3.9"
+services:
+  api:
+    build: .
+    container_name: api
+    command: dev
+    working_dir: /app
+    volumes:
+      - ./src:/app/src
+      - ./prisma:/app/prisma
+      - ./prisma/dev.db:/app/dev.db
+    ports:
+      - 3001:3001
+    env_file:
+      - .env
+    tty: true
+    stdin_open: true
+    restart: always
+  db:
+    container_name: database
+    image: alpine
+    command: tail -f /dev/null
+    restart: always
+    volumes:
+      - ./prisma/dev.db:/app/dev.db
+    healthcheck:
+      test: ["CMD-SHELL", "echo success"]
+      interval: 10s
+      timeout: 10s
+      retries: 5
