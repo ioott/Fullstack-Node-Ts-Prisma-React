@@ -1,0 +1,136 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Cliente {
+  id              Int                @id @default(autoincrement())
+  nome            String
+  cpf             String             @unique
+  endereco        String
+  email           String?            @unique
+  telefone        String?
+  eventos         Evento[]           //Inverse relationship for Evento
+  pagamentos      Pagamento[]        //Inverse relationship for Pagamento
+  createdAt       DateTime           @default(now())
+  updatedAt       DateTime           @updatedAt
+
+  @@map("clientes")
+}
+
+model Buffet {
+  id              Int                @id @default(autoincrement())
+  nome            String
+  descricao       String
+  eventos         Evento[]
+  duracao         BuffetDuracao      @relation(fields: [duracaoId], references: [id])
+  duracaoId       Int
+  qtdConvidados   BuffetConvidados   @relation(fields: [qtdConvidadosId], references: [id])
+  qtdConvidadosId Int
+
+  @@map("buffets")
+}
+
+model BuffetDuracao {
+  id              Int                 @id @default(autoincrement())
+  duracao         Int
+  buffet          Buffet[]
+
+  @@map("buffet_duracao")
+}
+
+model BuffetConvidados {
+  id              Int                 @id @default(autoincrement())
+  qtdConvidados   Int
+  preco           Float               //Price for this number of guests
+  buffet          Buffet[]
+  buffetId        Int?
+
+  @@map("buffet_convidados")
+}
+
+model Opcional {
+  id              Int                 @id @default(autoincrement())
+  nome            String
+  descricao       String
+  tipo            OpcionalTipo?       @relation(fields: [tipoId], references: [id])
+  tipoId          Int
+  qtd             OpcionalQtd?        @relation(fields: [qtdId], references: [id])
+  qtdId           Int
+  eventos         EventoOpcional?     @relation(fields: [eventoId], references: [id])
+  eventoId        Int
+
+  @@map("opcionais")
+}
+
+model OpcionalTipo {
+  id              Int                 @id @default(autoincrement())
+  tipo            String
+  preco           Float               //Price of this type/brand
+  opcional        Opcional[]
+  opcionalId      Int
+
+  @@map("opcional_tipo")
+}
+
+model OpcionalQtd {
+  id             Int             @id @default(autoincrement())
+  qtd            Int
+  preco          Float           //Price for this quantity
+  opcional       Opcional[]
+
+  @@map("opcional_qtd")
+}
+
+model Evento {
+  id             Int             @id @default(autoincrement())
+  tipo           String
+  aniversariante String?
+  data           DateTime
+  horarioInicial DateTime
+  endereco       String
+  temaFesta      String?
+  responsavel    String?
+  estrutura      String?
+  cliente        Cliente         @relation(fields: [clienteId], references: [id])
+  clienteId      Int
+  buffet         Buffet          @relation(fields: [buffetId], references: [id])
+  buffetId       Int
+  opcionais      EventoOpcional? @relation(fields: [opcionalId], references: [id])
+  opcionalId     Int
+  pagamentos     Pagamento[]
+  contrato       String?
+  obs            String?
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+
+  @@map("eventos")
+}
+
+model EventoOpcional {
+  id             Int             @id @default(autoincrement())
+  evento         Evento[]
+  opcional       Opcional[]
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+
+  @@map("eventos_opcionais")
+}
+
+model Pagamento {
+  id             Int             @id @default(autoincrement())
+  cliente        Cliente         @relation(fields: [clienteId], references: [id])
+  clienteId      Int
+  evento         Evento          @relation(fields: [eventoId], references: [id])
+  eventoId       Int
+  data           DateTime
+  valor          Float
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+
+  @@map("pagamentos")
+}
