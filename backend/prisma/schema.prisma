@@ -7,130 +7,154 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Cliente {
-  id              Int                @id @default(autoincrement())
-  nome            String
-  cpf             String             @unique
-  endereco        String
-  email           String?            @unique
-  telefone        String?
-  eventos         Evento[]           //Inverse relationship for Evento
-  pagamentos      Pagamento[]        //Inverse relationship for Pagamento
-  createdAt       DateTime           @default(now())
-  updatedAt       DateTime           @updatedAt
+model Client {
+  id          Int       @id @default(autoincrement())
+  name        String
+  cpf         String    @unique
+  adress      String
+  email       String?   @unique
+  phoneNumber String?
+  event       Event[]
+  payments    Payment[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
 
   @@map("clientes")
 }
 
 model Buffet {
-  id              Int                @id @default(autoincrement())
-  nome            String
-  descricao       String
-  eventos         Evento[]
-  duracao         BuffetDuracao      @relation(fields: [duracaoId], references: [id])
-  duracaoId       Int
-  qtdConvidados   BuffetConvidados   @relation(fields: [qtdConvidadosId], references: [id])
-  qtdConvidadosId Int
+  id               Int                    @id @default(autoincrement())
+  name             String
+  description      String
+  event            Event[]
+  duration         BuffetDuration[]
+  durationId       Int
+  guestsQtt        BuffetGuestsQuantity[]
+  guestsQttId      Int
+  GuestsQuantity   GuestsQuantity?        @relation(fields: [guestsQuantityId], references: [id])
+  guestsQuantityId Int?
 
   @@map("buffets")
 }
 
-model BuffetDuracao {
-  id              Int                 @id @default(autoincrement())
-  duracao         Int
-  buffet          Buffet[]
+model Duration {
+  id       Int              @id @default(autoincrement())
+  duration Int
+  buffets  BuffetDuration[]
 
+  @@map("duracoes")
+}
+
+model GuestsQuantity {
+  id                   Int                   @id @default(autoincrement())
+  guestsQtt            Int
+  price                Float
+  buffets              Buffet[]
+  BuffetGuestsQuantity BuffetGuestsQuantity?
+
+  @@map("qtd_convidados")
+}
+
+model BuffetDuration {
+  buffet     Buffet   @relation(fields: [buffetId], references: [id])
+  buffetId   Int      @unique
+  duration   Duration @relation(fields: [durationId], references: [id])
+  durationId Int      @unique
+
+  @@id([buffetId, durationId])
   @@map("buffet_duracao")
 }
 
-model BuffetConvidados {
-  id              Int                 @id @default(autoincrement())
-  qtdConvidados   Int
-  preco           Float               //Price for this number of guests
-  buffet          Buffet[]
-  buffetId        Int?
+model BuffetGuestsQuantity {
+  buffet      Buffet         @relation(fields: [buffetId], references: [id])
+  buffetId    Int            @unique
+  guestsQtt   GuestsQuantity @relation(fields: [guestsQttId], references: [id])
+  guestsQttId Int            @unique
 
-  @@map("buffet_convidados")
+  @@id([buffetId, guestsQttId])
+  @@map("buffet_qtdConvidados")
 }
 
-model Opcional {
-  id              Int                 @id @default(autoincrement())
-  nome            String
-  descricao       String
-  tipo            OpcionalTipo?       @relation(fields: [tipoId], references: [id])
-  tipoId          Int
-  qtd             OpcionalQtd?        @relation(fields: [qtdId], references: [id])
-  qtdId           Int
-  eventos         EventoOpcional?     @relation(fields: [eventoId], references: [id])
-  eventoId        Int
+model Optional {
+  id          Int                   @id @default(autoincrement())
+  name        String
+  description String
+  qtt         Int
+  type        OptionalOptionalType?
+  typeId      Int
+  event       EventOptional?
+  eventId     Int
 
   @@map("opcionais")
 }
 
-model OpcionalTipo {
-  id              Int                 @id @default(autoincrement())
-  tipo            String
-  preco           Float               //Price of this type/brand
-  opcional        Opcional[]
-  opcionalId      Int
+model OptionalType {
+  id       Int                   @id @default(autoincrement())
+  type     String
+  price    Float
+  qtt      Int
+  optional OptionalOptionalType?
 
-  @@map("opcional_tipo")
+  @@map("opcionais_tipos")
 }
 
-model OpcionalQtd {
-  id             Int             @id @default(autoincrement())
-  qtd            Int
-  preco          Float           //Price for this quantity
-  opcional       Opcional[]
+model OptionalOptionalType {
+  type       OptionalType @relation(fields: [typeId], references: [id])
+  typeId     Int          @unique
+  optional   Optional     @relation(fields: [optionalId], references: [id])
+  optionalId Int          @unique
 
-  @@map("opcional_qtd")
+  @@id([typeId, optionalId])
+  @@map("opcional_opcionalTipo")
 }
 
-model Evento {
-  id             Int             @id @default(autoincrement())
-  tipo           String
-  aniversariante String?
-  data           DateTime
-  horarioInicial DateTime
-  endereco       String
-  temaFesta      String?
-  responsavel    String?
-  estrutura      String?
-  cliente        Cliente         @relation(fields: [clienteId], references: [id])
-  clienteId      Int
-  buffet         Buffet          @relation(fields: [buffetId], references: [id])
-  buffetId       Int
-  opcionais      EventoOpcional? @relation(fields: [opcionalId], references: [id])
-  opcionalId     Int
-  pagamentos     Pagamento[]
-  contrato       String?
+model Event {
+  id             Int            @id @default(autoincrement())
+  type           String
+  birthdayPerson String?
+  date           DateTime
+  startTime      DateTime
+  adress         String
+  partyTheme     String?
+  responsible    String?
+  structure      String?
+  contract       String?
   obs            String?
-  createdAt      DateTime        @default(now())
-  updatedAt      DateTime        @updatedAt
+  client         Client         @relation(fields: [clientId], references: [id])
+  clientId       Int
+  buffet         Buffet         @relation(fields: [buffetId], references: [id])
+  buffetId       Int
+  optional       EventOptional?
+  optionalId     Int
+  payments       Payment[]
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
 
   @@map("eventos")
 }
 
-model EventoOpcional {
-  id             Int             @id @default(autoincrement())
-  evento         Evento[]
-  opcional       Opcional[]
-  createdAt      DateTime        @default(now())
-  updatedAt      DateTime        @updatedAt
+model EventOptional {
+  event      Event    @relation(fields: [eventId], references: [id])
+  eventId    Int      @unique
+  optional   Optional @relation(fields: [optionalId], references: [id])
+  optionalId Int      @unique
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 
-  @@map("eventos_opcionais")
+  @@id([eventId, optionalId])
+  @@map("evento_opcional")
 }
 
-model Pagamento {
-  id             Int             @id @default(autoincrement())
-  cliente        Cliente         @relation(fields: [clienteId], references: [id])
-  clienteId      Int
-  evento         Evento          @relation(fields: [eventoId], references: [id])
-  eventoId       Int
-  data           DateTime
-  valor          Float
-  createdAt      DateTime        @default(now())
-  updatedAt      DateTime        @updatedAt
+model Payment {
+  id        Int      @id @default(autoincrement())
+  client    Client   @relation(fields: [clientId], references: [id])
+  clientId  Int
+  event     Event    @relation(fields: [eventId], references: [id])
+  eventId   Int
+  date      DateTime
+  amount    Float
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@map("pagamentos")
 }
