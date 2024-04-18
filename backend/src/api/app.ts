@@ -3,7 +3,7 @@ import cors = require('cors')
 import express = require('express')
 import helmet from 'helmet';
 import { errorHandler } from '../middlewares/errorHandler';
-import serviceManagementRouter from '../serviceManagement/serviceManagementRouter';
+import serviceManagementRouter from '../serviceManagement/routes/buffetRouter';
 import { errors } from 'celebrate';
 
 const app = express();
