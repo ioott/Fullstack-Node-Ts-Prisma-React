@@ -1,5 +1,5 @@
 import { PrismaClient } from '@prisma/client'
-import { BuffetResponse, AddBuffetParams } from './interfaces/Ibuffet'
+import { BuffetResponse, AddBuffetParams } from '../interfaces/IBuffet'
 
 const prisma = new PrismaClient()
 

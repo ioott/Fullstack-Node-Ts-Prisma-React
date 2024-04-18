@@ -1,5 +1,5 @@
 import { Request, Response } from 'express'
-import * as service from './serviceManagementService'
+import * as service from '../services/buffetService'
 
 export async function createBuffet (req: Request, res: Response):
 Promise<Record<string, any>> {

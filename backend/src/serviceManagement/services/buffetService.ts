@@ -1,7 +1,7 @@
 import { StatusCodes, ReasonPhrases } from 'http-status-codes'
-import { AddBuffetParams } from './interfaces/Ibuffet'
-import { createBuffetSchema, editBuffetSchema } from '../middlewares/serviceValidation'
-import * as model from './serviceManagementModel'
+import { AddBuffetParams } from '../interfaces/IBuffet'
+import { createBuffetSchema, editBuffetSchema } from '../../middlewares/serviceValidation'
+import * as model from '../models/buffetModel'
 
 export async function createBuffet(data: AddBuffetParams):
 Promise<Record<string, number>> {

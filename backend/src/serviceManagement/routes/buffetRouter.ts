@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 import * as express from 'express'
-import * as controller from './serviceManagementController'
+import * as controller from '../controllers/buffetController'
 
 const router = express.Router()
 
