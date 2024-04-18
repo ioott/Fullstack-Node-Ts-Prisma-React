@@ -1,7 +1,9 @@
 version: "3.9"
 services:
   api:
-    build: .
+    build:
+      context: .
+      dockerfile: config/Docker/Dockerfile
     container_name: api
     command: dev
     working_dir: /app
@@ -11,7 +13,7 @@ services:
     ports:
       - 3001:3001
     env_file:
-      - .env
+      - ./config/.env
     tty: true
     stdin_open: true
     restart: always
@@ -19,7 +21,7 @@ services:
     container_name: database
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: config/Docker/Dockerfile
     restart: always
     volumes:
       - ./prisma:/app/prisma

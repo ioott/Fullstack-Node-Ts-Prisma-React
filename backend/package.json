@@ -6,7 +6,7 @@
   "scripts": {
     "db:reset": "npx prisma migrate reset --force",
     "db:init": "npx prisma migrate dev --name init",
-    "build": "tsc --project tsconfig.json",
+    "build": "tsc --project config/tsconfig.json",
     "prestart": "npm run build && npm run db:reset",
     "start": "node ./build/server.js",
     "predev": "npm run db:init",

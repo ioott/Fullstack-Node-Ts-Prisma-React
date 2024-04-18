@@ -1,6 +1,7 @@
 import { Joi } from "celebrate";
 
 export const createBuffetSchema = Joi.object({
+  id: Joi.number(),
   name: Joi.string().required(),
   description: Joi.string().required(),
   events: Joi.array().items(Joi.number()),
@@ -8,7 +9,7 @@ export const createBuffetSchema = Joi.object({
   guestsQtts: Joi.array().items(Joi.number()).required(),
 });
 
-export const editBuffetSchema = Joi.object({
+export const updateBuffetSchema = Joi.object({
   id: Joi.number(),
   name: Joi.string(),
   description: Joi.string(),

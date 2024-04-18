@@ -1,6 +1,6 @@
 import { StatusCodes, ReasonPhrases } from 'http-status-codes'
 import { AddBuffetParams } from '../interfaces/IBuffet'
-import { createBuffetSchema, editBuffetSchema } from '../middlewares/buffetValidation'
+import { createBuffetSchema, updateBuffetSchema } from '../middlewares/buffetValidation'
 import * as model from '../models/buffetModel'
 
 export async function createBuffet(data: AddBuffetParams):
@@ -36,7 +36,7 @@ export async function updateBuffet (
 ): Promise<Record<string, number>> {
   let serviceResponse
 
-  const isValid = editBuffetSchema.validate(data)
+  const isValid = updateBuffetSchema.validate(data)
 
   isValid.error
   ? serviceResponse = {
