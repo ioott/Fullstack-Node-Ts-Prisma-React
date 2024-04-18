@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   "env": {
     "browser": true,
     "es2021": true,
@@ -25,7 +25,7 @@ module.exports = {
     "sourceType": "module",
     "ecmaVersion": "latest",
     "sourceType": "module",
-    "project": "./backend/tsconfig.json"
+    "project": "./projeto_fullstack/backend/tsconfig.json"
   },
   "plugins": ["react"],
   "rules": {
