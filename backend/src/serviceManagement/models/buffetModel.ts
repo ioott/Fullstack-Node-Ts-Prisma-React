@@ -183,3 +183,22 @@ export async function allBuffets(): Promise<BuffetResponse[]> {
   }));
 
 }
+
+export function createDuration(data: AddDurationParams) {
+  throw new Error('Function not implemented.')
+}
+
+
+export function updateDuration(id: number, data: Partial<import("../interfaces/IDuration").AddDurationParams>) {
+  throw new Error('Function not implemented.')
+}
+
+
+export function findDurationById(id: number): any {
+  throw new Error('Function not implemented.')
+}
+
+
+export function allDurations(): any {
+  throw new Error('Function not implemented.')
+}
