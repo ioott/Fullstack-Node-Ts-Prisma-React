@@ -2,29 +2,29 @@ version: "3.9"
 services:
   api:
     build:
-      context: .
+      context: ../..
       dockerfile: config/Docker/Dockerfile
     container_name: api
     command: dev
     working_dir: /app
     volumes:
-      - ./src:/app/src
-      - ./prisma:/app/prisma
+      - ../../src:/app/src
+      - ../../prisma:/app/prisma
     ports:
       - 3001:3001
     env_file:
-      - ./config/.env
+      - ../../.env
     tty: true
     stdin_open: true
     restart: always
   db:
     container_name: database
     build:
-      context: .
+      context: ../..
       dockerfile: config/Docker/Dockerfile
     restart: always
     volumes:
-      - ./prisma:/app/prisma
+      - ../../prisma:/app/prisma
     healthcheck:
       test: ["CMD-SHELL", "echo success"]
       interval: 10s

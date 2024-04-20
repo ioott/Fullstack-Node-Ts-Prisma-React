@@ -1,10 +1,11 @@
 FROM node:16.14-alpine
 WORKDIR /app
-EXPOSE 3001
 RUN apk add --no-cache sqlite
+COPY config/. .
+COPY prisma ./prisma
+COPY src ./src
 COPY package*.json ./
 RUN npm install
 COPY . .
-RUN npm run generate-schema
-ENTRYPOINT [ "npm", "run" ]
-CMD [ "dev" ]
+EXPOSE 3001
+ENTRYPOINT ["sh", "-c", "npm run generate-schema && npm run dev"]
