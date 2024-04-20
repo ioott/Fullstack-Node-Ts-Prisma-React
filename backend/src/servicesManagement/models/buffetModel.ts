@@ -10,6 +10,7 @@ Promise<string> {
       id: new Date().getTime(),
       name: data.name,
       description: data.description,
+      active: data.active,
       events:
         data.events
         ? { connect: data.events.map(id => ({ id }))}
@@ -31,7 +32,7 @@ Promise<string> {
 
 
 export async function updateBuffet(
-  id: number,
+  id: bigint,
   data: Partial<AddBuffetParams>):
 Promise<string> {
   const durations = data.durations
@@ -81,6 +82,7 @@ Promise<string> {
     data: {
       name: data.name,
       description: data.description,
+      active: data.active,
       events:
         data.events
         ? { connect: data.events.map(id => ({ id }))}
@@ -107,12 +109,13 @@ Promise<string> {
   return "success";
 }
 
-export async function findBuffetById (id: number): Promise<BuffetResponse | null> {
+export async function findBuffetById (id: bigint): Promise<BuffetResponse | null> {
   return await prisma.buffet.findUnique({
     where: { id },
     select: {
       name: true,
       description: true,
+      active: true,
       events: {
         select: {
           date: true,
@@ -148,6 +151,7 @@ export async function allBuffets(): Promise<BuffetResponse[]> {
       id: true,
       name: true,
       description: true,
+      active: true,
       events: {
         select: {
           date: true,

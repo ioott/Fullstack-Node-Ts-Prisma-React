@@ -31,7 +31,7 @@ Promise<Record<string, number>> {
 }
 
 export async function updateBuffet (
-  id: number,
+  id: bigint,
   data: Partial<AddBuffetParams>
 ): Promise<Record<string, number>> {
   let serviceResponse
@@ -59,7 +59,7 @@ export async function updateBuffet (
   return serviceResponse
 }
 
-export async function findBuffetById (id: number):
+export async function findBuffetById (id: bigint):
 Promise<Record<string, number>> {
   let serviceResponse
   let buffetFound

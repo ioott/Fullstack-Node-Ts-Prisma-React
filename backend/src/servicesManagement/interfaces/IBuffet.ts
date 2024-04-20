@@ -1,15 +1,17 @@
 export interface AddBuffetParams {
-  id: number;
+  id: bigint;
   name: string;
   description: string;
-  events?: number[];
-  durations: number[];
-  guestsQtts: number[];
+  active?: boolean;
+  events?: bigint[];
+  durations: bigint[];
+  guestsQtts: bigint[];
 }
 
 export interface BuffetResponse {
   name: string;
   description: string;
+  active: boolean;
   events: {
       date: Date;
       client: {

@@ -12,7 +12,7 @@ Promise<Record<string, any>> {
 export async function updateBuffet (req: Request, res: Response):
 Promise<Record<string, any>> {
   const { statusCode, data } = await service
-  .updateBuffet(Number(req.params.id), req.body)
+  .updateBuffet(BigInt(req.params.id), req.body)
 
   return res.status(statusCode).json(data)
 }
@@ -20,7 +20,7 @@ Promise<Record<string, any>> {
 export async function findBuffetById (req: Request, res: Response):
 Promise<Record<string, any>> {
   const { statusCode, data } = await service
-  .findBuffetById(Number(req.params.id))
+  .findBuffetById(BigInt(req.params.id))
 
   return res.status(statusCode).json(data)
 }
