@@ -3,10 +3,10 @@ import { createDurationSchema, updateDurationSchema } from '../middlewares/durat
 import * as model from '../models/durationModel'
 import { AddDurationParams } from '../interfaces/IDuration';
 
-export async function createDuration(data: AddDurationParams):
-Promise<Record<string, number>> {
-  let serviceResponse;
+export async function createDuration(data: AddDurationParams)
+: Promise<Record<string, number>> {
 
+  let serviceResponse;
   const isValid = createDurationSchema.validate(data)
 
   isValid.error
@@ -16,7 +16,6 @@ Promise<Record<string, number>> {
       (detail: any) => detail.message
     ),
   }
-
   : await model.createDuration(data)
     ? serviceResponse = {
       statusCode: StatusCodes.CREATED,
@@ -32,10 +31,10 @@ Promise<Record<string, number>> {
 
 export async function updateDuration (
   id: bigint,
-  data: Partial<AddDurationParams>
-): Promise<Record<string, number>> {
-  let serviceResponse
+  data: Partial<AddDurationParams>)
+: Promise<Record<string, number>> {
 
+  let serviceResponse
   const isValid = updateDurationSchema.validate(data)
 
   isValid.error
@@ -45,7 +44,6 @@ export async function updateDuration (
       (detail: any) => detail.message
     ),
   }
-
   : await model.updateDuration(id, data)
     ? serviceResponse = {
       statusCode: StatusCodes.OK,
@@ -59,8 +57,9 @@ export async function updateDuration (
   return serviceResponse
 }
 
-export async function findDurationById (id: bigint):
-Promise<Record<string, number>> {
+export async function findDurationById (id: bigint)
+: Promise<Record<string, number>> {
+
   let serviceResponse
   let durationFound
 
@@ -81,8 +80,9 @@ Promise<Record<string, number>> {
   return serviceResponse
 }
 
-export async function allDurations ():
-Promise<Record<string, number>> {
+export async function allDurations()
+: Promise<Record<string, number>> {
+
   let serviceResponse
   let allDurations
 

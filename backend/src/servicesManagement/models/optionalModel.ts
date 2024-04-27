@@ -1,4 +1,4 @@
-import { PrismaClient } from '@prisma/client'
+import {PrismaClient} from '@prisma/client'
 import { AddOptionalParams, OptionalResponse } from '../interfaces/IOptional'
 
 const prisma = new PrismaClient()
@@ -10,7 +10,6 @@ export async function createOptional(data: AddOptionalParams)
       id: new Date().getTime(),
       name: data.name,
       description: data.description,
-      qtt: data.qtt,
       active:
         data.active
         ? data.active
@@ -35,7 +34,6 @@ export async function createOptional(data: AddOptionalParams)
   })
   return "success"
 };
-
 
 export async function updateOptional(
   id: bigint,
@@ -89,7 +87,6 @@ export async function updateOptional(
     data: {
       name: data.name,
       description: data.description,
-      qtt: data.qtt,
       active: data.active,
       types:
         data.types
@@ -121,7 +118,6 @@ export async function findOptionalById (id: bigint)
     select: {
       name: true,
       description: true,
-      qtt: true,
       active: true,
       types: { select: {
         type: { select: { type: true, price: true }}
@@ -144,7 +140,6 @@ export async function allOptionals()
       id: true,
       name: true,
       description: true,
-      qtt: true,
       active: true,
       types: { select: {
         type: { select: { type: true, price: true }}

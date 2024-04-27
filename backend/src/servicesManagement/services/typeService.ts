@@ -1,13 +1,13 @@
 import { StatusCodes, ReasonPhrases } from 'http-status-codes'
-import { AddBuffetParams } from '../interfaces/IBuffet'
-import { createBuffetSchema, updateBuffetSchema } from '../middlewares/buffetValidation'
-import * as model from '../models/buffetModel'
+import { createTypeSchema, updateTypeSchema } from '../middlewares/typeValidation'
+import * as model from '../models/typeModel'
+import { AddTypeParams } from '../interfaces/IType';
 
-export async function createBuffet(data: AddBuffetParams)
+export async function createType(data: AddTypeParams)
 : Promise<Record<string, number>> {
 
   let serviceResponse;
-  const isValid = createBuffetSchema.validate(data)
+  const isValid = createTypeSchema.validate(data)
 
   isValid.error
   ? serviceResponse = {
@@ -16,10 +16,10 @@ export async function createBuffet(data: AddBuffetParams)
       (detail: any) => detail.message
     ),
   }
-  : await model.createBuffet(data)
+  : await model.createType(data)
     ? serviceResponse = {
       statusCode: StatusCodes.CREATED,
-      data: 'Buffet cadastrado com sucesso'
+      data: 'Type cadastrado com sucesso'
     }
     : serviceResponse = {
       statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
@@ -29,13 +29,13 @@ export async function createBuffet(data: AddBuffetParams)
   return serviceResponse
 }
 
-export async function updateBuffet (
+export async function updateType (
   id: bigint,
-  data: Partial<AddBuffetParams>)
+  data: Partial<AddTypeParams>)
 : Promise<Record<string, number>> {
 
   let serviceResponse
-  const isValid = updateBuffetSchema.validate(data)
+  const isValid = updateTypeSchema.validate(data)
 
   isValid.error
   ? serviceResponse = {
@@ -44,10 +44,10 @@ export async function updateBuffet (
       (detail: any) => detail.message
     ),
   }
-  : await model.updateBuffet(id, data)
+  : await model.updateType(id, data)
     ? serviceResponse = {
       statusCode: StatusCodes.OK,
-      data: 'Buffet atualizado com sucesso'
+      data: 'Type atualizado com sucesso'
     }
     : serviceResponse = {
       statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
@@ -57,18 +57,18 @@ export async function updateBuffet (
   return serviceResponse
 }
 
-export async function findBuffetById (id: bigint)
+export async function findTypeById (id: bigint)
 : Promise<Record<string, number>> {
 
   let serviceResponse
-  let buffetFound
+  let typeFound
 
-  buffetFound = await model.findBuffetById(id)
+  typeFound = await model.findTypeById(id)
 
-  if(buffetFound) {
+  if(typeFound) {
     serviceResponse = {
     statusCode: StatusCodes.OK,
-    data: buffetFound
+    data: typeFound
     }
   } else {
     serviceResponse = {
@@ -80,18 +80,18 @@ export async function findBuffetById (id: bigint)
   return serviceResponse
 }
 
-export async function allBuffets()
+export async function allTypes()
 : Promise<Record<string, number>> {
 
   let serviceResponse
-  let allBuffets
+  let allTypes
 
-  allBuffets = await model.allBuffets()
+  allTypes = await model.allTypes()
 
-  if(allBuffets) {
+  if(allTypes) {
     serviceResponse = {
     statusCode: StatusCodes.OK,
-    data: allBuffets
+    data: allTypes
     }
   } else {
     serviceResponse = {

@@ -1,20 +1,18 @@
 import { Joi } from "celebrate";
 
-export const createOptionalSchema = Joi.object({
+export const createTypeSchema = Joi.object({
   id: Joi.number().required(),
-  name: Joi.string().required(),
-  description: Joi.string().required(),
+  type: Joi.string().required(),
+  price: Joi.number().required(),
   active: Joi.boolean(),
-  types: Joi.array().items(Joi.number()),
-  events: Joi.array().items(Joi.number()),
+  optionals: Joi.array().items(Joi.number()),
 });
 
-export const updateOptionalSchema = Joi.object({
-  name: Joi.string(),
-  description: Joi.string(),
+export const updateTypeSchema = Joi.object({
+  type: Joi.string(),
+  price: Joi.number(),
   active: Joi.boolean(),
-  types: Joi.array().items(Joi.number()),
-  events: Joi.array().items(Joi.number()),
+  optionals: Joi.array().items(Joi.number()),
 });
 
 export async function validateData(data: any, schema: Joi.Schema):

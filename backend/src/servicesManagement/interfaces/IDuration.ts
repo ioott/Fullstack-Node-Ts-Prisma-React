@@ -8,9 +8,7 @@ export interface AddDurationParams {
 export interface DurationResponse {
   duration: number;
   active: boolean;
-  buffets: {
-      buffet: {
-          name: string;
-      };
-  }[];
+  buffets?: {buffet: {
+    name: string;
+  }}[];
 }

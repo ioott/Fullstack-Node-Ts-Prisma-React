@@ -2,7 +2,6 @@ export interface AddOptionalParams {
   id: bigint;
   name: string;
   description: string;
-  qtt: number;
   active?: boolean;
   types?: bigint[];
   events?: bigint[];
@@ -11,15 +10,14 @@ export interface AddOptionalParams {
 export interface OptionalResponse {
   name: string;
   description: string;
-  qtt: number;
   active: boolean;
-  types: {
+  types?: {
     type: {
       type: string;
       price: number;
     }
   }[];
-  events: {
+  events?: {
     event: {
       date: Date;
       client: {

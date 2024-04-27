@@ -10,9 +10,7 @@ export interface GuestsQttResponse {
   guestsQtt: number;
   price: number;
   active: boolean;
-  buffets: {
-      buffet: {
-          name: string;
-      };
-  }[];
+  buffets?: {buffet: {
+    name: string;
+  }}[];
 }

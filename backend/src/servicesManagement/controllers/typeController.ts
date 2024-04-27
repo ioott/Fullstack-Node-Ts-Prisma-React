@@ -1,37 +1,37 @@
 import { Request, Response } from 'express'
-import * as service from '../services/buffetService'
+import * as service from '../services/typeService'
 
-export async function createBuffet (req: Request, res: Response)
+export async function createType (req: Request, res: Response)
 : Promise<Record<string, any>> {
 
   const { statusCode, data } = await service
-  .createBuffet(req.body);
+  .createType(req.body);
 
   return res.status(statusCode).json(data);
 }
 
-export async function updateBuffet (req: Request, res: Response)
+export async function updateType (req: Request, res: Response)
 : Promise<Record<string, any>> {
 
   const { statusCode, data } = await service
-  .updateBuffet(BigInt(req.params.id), req.body)
+  .updateType(BigInt(req.params.id), req.body)
 
   return res.status(statusCode).json(data)
 }
 
-export async function findBuffetById (req: Request, res: Response)
+export async function findTypeById (req: Request, res: Response)
 : Promise<Record<string, any>> {
 
   const { statusCode, data } = await service
-  .findBuffetById(BigInt(req.params.id))
+  .findTypeById(BigInt(req.params.id))
 
   return res.status(statusCode).json(data)
 }
 
-export async function allBuffets (_req: Request, res: Response)
+export async function allTypes (_req: Request, res: Response)
 : Promise<Record<string, any>> {
 
-  const { statusCode, data } = await service.allBuffets()
+  const { statusCode, data } = await service.allTypes()
 
   return res.status(statusCode).json(data)
 }

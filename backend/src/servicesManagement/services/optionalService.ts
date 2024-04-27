@@ -3,10 +3,10 @@ import { createOptionalSchema, updateOptionalSchema } from '../middlewares/optio
 import * as model from '../models/optionalModel'
 import { AddOptionalParams } from '../interfaces/IOptional';
 
-export async function createOptional(data: AddOptionalParams):
-Promise<Record<string, number>> {
-  let serviceResponse;
+export async function createOptional(data: AddOptionalParams)
+: Promise<Record<string, number>> {
 
+  let serviceResponse;
   const isValid = createOptionalSchema.validate(data)
 
   isValid.error
@@ -16,7 +16,6 @@ Promise<Record<string, number>> {
       (detail: any) => detail.message
     ),
   }
-
   : await model.createOptional(data)
     ? serviceResponse = {
       statusCode: StatusCodes.CREATED,
@@ -32,10 +31,10 @@ Promise<Record<string, number>> {
 
 export async function updateOptional (
   id: bigint,
-  data: Partial<AddOptionalParams>
-): Promise<Record<string, number>> {
-  let serviceResponse
+  data: Partial<AddOptionalParams>)
+: Promise<Record<string, number>> {
 
+  let serviceResponse
   const isValid = updateOptionalSchema.validate(data)
 
   isValid.error
@@ -45,7 +44,6 @@ export async function updateOptional (
       (detail: any) => detail.message
     ),
   }
-
   : await model.updateOptional(id, data)
     ? serviceResponse = {
       statusCode: StatusCodes.OK,
@@ -59,8 +57,9 @@ export async function updateOptional (
   return serviceResponse
 }
 
-export async function findOptionalById (id: bigint):
-Promise<Record<string, number>> {
+export async function findOptionalById (id: bigint)
+: Promise<Record<string, number>> {
+
   let serviceResponse
   let optionalFound
 
@@ -81,8 +80,9 @@ Promise<Record<string, number>> {
   return serviceResponse
 }
 
-export async function allOptionals ():
-Promise<Record<string, number>> {
+export async function allOptionals()
+: Promise<Record<string, number>> {
+
   let serviceResponse
   let allOptionals
 

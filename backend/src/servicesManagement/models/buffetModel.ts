@@ -3,187 +3,171 @@ import { BuffetResponse, AddBuffetParams } from '../interfaces/IBuffet'
 
 const prisma = new PrismaClient()
 
-export async function createBuffet(data: AddBuffetParams):
-Promise<string> {
+export async function createBuffet(data: AddBuffetParams)
+: Promise<string> {
+
   await prisma.buffet.create({
     data: {
       id: new Date().getTime(),
       name: data.name,
       description: data.description,
-      active: data.active,
-      events:
-        data.events
-        ? { connect: data.events.map(id => ({ id }))}
+      active: data.active
+        ? data.active
         : undefined,
-      durations: {
+      events:{ connect: data.events?.map(id => ({ id }))},
+      durations:{
         create: data.durations.map(id => ({
           duration: {connect: { id }}
         }))
       },
-      guestsQtts: {
+      guestsQtts:{
         create: data.guestsQtts.map(id => ({
           guestsQtt: {connect: { id }}
         }))
       },
     }
   })
-  return "success"
-};
 
+  return "success"
+}
 
 export async function updateBuffet(
-  id: bigint,
-  data: Partial<AddBuffetParams>):
-Promise<string> {
-  const durations = data.durations
+  buffetId: bigint,
+  data: Partial<AddBuffetParams>)
+: Promise<string> {
+
+  const { durations } = data
   if (durations) {
+
     const existingDurations = await prisma.durationsOnBuffets
     .findMany({
-      where: { buffetId: id },
+      where: { buffetId },
       select: { durationId: true },
-    });
+    })
 
     const durationsToRemove = existingDurations.filter(duration =>
       !durations.includes(duration.durationId));
 
       await prisma.durationsOnBuffets.deleteMany({
       where: {
-        buffetId: id,
+        buffetId,
         durationId: {
           in: durationsToRemove.map(duration => duration.durationId),
         },
       },
-    });
+
+    })
+
   }
 
-  const guestsQtts = data.guestsQtts
+  const { guestsQtts } = data
   if (guestsQtts) {
+
     const existingGuestsQtts = await prisma.guestsQttsOnBuffets
     .findMany({
-      where: { buffetId: id },
+      where: { buffetId },
       select: { guestsQttId: true },
-    });
+    })
 
     const guestsQttsToRemove = existingGuestsQtts.filter(guestsQtt =>
       !guestsQtts.includes(guestsQtt.guestsQttId));
 
     await prisma.guestsQttsOnBuffets.deleteMany({
       where: {
-        buffetId: id,
+        buffetId,
         guestsQttId: {
           in: guestsQttsToRemove.map(guestsQtt => guestsQtt.guestsQttId),
         },
       },
-    });
+    })
+
   }
 
   await prisma.buffet.update({
-    where: { id },
+    where: { id: buffetId },
     data: {
       name: data.name,
       description: data.description,
       active: data.active,
-      events:
-        data.events
-        ? { connect: data.events.map(id => ({ id }))}
+      events: data.events
+        ? {connect: data.events.map(id => ({ id: buffetId }))}
         : undefined,
-      durations:
-        data.durations
-        ? {
-          create: data.durations.map(id => ({
-            duration: {connect: { id }
-          }}))
-        }
+      durations: data.durations
+        ? {create: data.durations.map(id => ({
+            duration: {connect: { id }}
+          }))}
         : undefined,
-      guestsQtts:
-        data.guestsQtts
-        ? {
-          create: data.guestsQtts.map(id => ({
+      guestsQtts: data.guestsQtts
+        ? {create: data.guestsQtts.map(id => ({
             guestsQtt: {connect: { id }}
-          }))
-        }
+          }))}
         : undefined
     }
   })
 
-  return "success";
+  return "success"
 }
 
-export async function findBuffetById (id: bigint): Promise<BuffetResponse | null> {
+export async function findBuffetById (id: bigint)
+: Promise<BuffetResponse | null> {
+
   return await prisma.buffet.findUnique({
     where: { id },
     select: {
       name: true,
       description: true,
       active: true,
-      events: {
-        select: {
-          date: true,
-          client: {
-            select: { name: true }
-          }
-        }
-      },
-      durations: {
-        select: {
-          duration: {
-            select: { duration: true }
-          }
-        }
-      },
+      events: {select: {
+        date: true,
+        client: {select: { name: true }}
+      }},
+      durations: {select: {
+        duration: {select: { duration: true }}
+      }},
       guestsQtts: {
-        select: {
-          guestsQtt: {
-            select: {
-              guestsQtt: true,
-              price: true
-            }
-          }
-        }
+        select: {guestsQtt: {select: {
+          guestsQtt: true,
+          price: true
+        }}}
       }
     }
-  });
+  })
+
 }
 
-export async function allBuffets(): Promise<BuffetResponse[]> {
+export async function allBuffets()
+: Promise<BuffetResponse[]> {
+
   const allBuffets = await prisma.buffet.findMany({
     select: {
       id: true,
       name: true,
       description: true,
       active: true,
-      events: {
-        select: {
-          date: true,
-          client: {
-            select: { name: true }
-          }
-        }
-      },
+      events: {select: {
+        date: true,
+        client: {select: { name: true }}
+      }},
       durations: {
-        select: {
-          duration: {
-            select: { duration: true }
-          }
-        }
+        select: {duration: {
+          select: { duration: true }
+        }}
       },
       guestsQtts: {
-        select: {
-          guestsQtt: {
-            select: {
-              guestsQtt: true,
-              price: true
-            }
-          }
-        }
+        select: {guestsQtt: {select: {
+          guestsQtt: true,
+          price: true
+        }}}
       }
     }
-  });
+
+  })
 
   // JSON.stringify() não consegue serializar valores do tipo BigInt (tipo do id), portanto precisa ser convertido antes.
+
   return allBuffets.map(buffet => ({
     ...buffet,
     id: buffet.id.toString()
-  }));
+  }))
 
 }

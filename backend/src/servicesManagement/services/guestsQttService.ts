@@ -3,10 +3,10 @@ import { createGuestsQttSchema, updateGuestsQttSchema } from '../middlewares/que
 import * as model from '../models/guestsQttModel'
 import { AddGuestsQttParams } from '../interfaces/IGuestsQtt';
 
-export async function createGuestsQtt(data: AddGuestsQttParams):
-Promise<Record<string, number>> {
-  let serviceResponse;
+export async function createGuestsQtt(data: AddGuestsQttParams)
+: Promise<Record<string, number>> {
 
+  let serviceResponse;
   const isValid = createGuestsQttSchema.validate(data)
 
   isValid.error
@@ -16,7 +16,6 @@ Promise<Record<string, number>> {
       (detail: any) => detail.message
     ),
   }
-
   : await model.createGuestsQtt(data)
     ? serviceResponse = {
       statusCode: StatusCodes.CREATED,
@@ -32,10 +31,10 @@ Promise<Record<string, number>> {
 
 export async function updateGuestsQtt (
   id: bigint,
-  data: Partial<AddGuestsQttParams>
-): Promise<Record<string, number>> {
-  let serviceResponse
+  data: Partial<AddGuestsQttParams>)
+: Promise<Record<string, number>> {
 
+  let serviceResponse
   const isValid = updateGuestsQttSchema.validate(data)
 
   isValid.error
@@ -45,7 +44,6 @@ export async function updateGuestsQtt (
       (detail: any) => detail.message
     ),
   }
-
   : await model.updateGuestsQtt(id, data)
     ? serviceResponse = {
       statusCode: StatusCodes.OK,
@@ -59,8 +57,9 @@ export async function updateGuestsQtt (
   return serviceResponse
 }
 
-export async function findGuestsQttById (id: bigint):
-Promise<Record<string, number>> {
+export async function findGuestsQttById (id: bigint)
+: Promise<Record<string, number>> {
+
   let serviceResponse
   let guestsQttFound
 
@@ -81,8 +80,9 @@ Promise<Record<string, number>> {
   return serviceResponse
 }
 
-export async function allGuestsQtts ():
-Promise<Record<string, number>> {
+export async function allGuestsQtts()
+: Promise<Record<string, number>> {
+
   let serviceResponse
   let allGuestsQtts
 

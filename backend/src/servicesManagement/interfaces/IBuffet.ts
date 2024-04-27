@@ -12,21 +12,15 @@ export interface BuffetResponse {
   name: string;
   description: string;
   active: boolean;
-  events: {
-      date: Date;
-      client: {
-          name: string;
-      };
+  events?: {
+    date: Date;
+    client: { name: string };
   }[];
-  durations: {
-      duration: {
-          duration: number;
-      };
-  }[];
-  guestsQtts: {
-      guestsQtt: {
-          guestsQtt: number;
-          price: number;
-      };
-  }[];
+  durations: { duration: {
+    duration: number;
+  }}[];
+  guestsQtts: { guestsQtt: {
+    guestsQtt: number;
+    price: number;
+  }}[];
 }
