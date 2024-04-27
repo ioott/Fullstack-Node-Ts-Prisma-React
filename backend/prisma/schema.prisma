@@ -30,9 +30,7 @@ model Buffet {
   events             Event[]
   eventId            BigInt?
   durations          DurationsOnBuffets[]
-  durationId         BigInt?
   guestsQtts         GuestsQttsOnBuffets[]
-  guestsQttId        BigInt?
 
   @@map("buffets")
 }
@@ -82,7 +80,6 @@ model Optional {
   id          BigInt               @id
   name        String
   description String
-  qtt         Int
   active      Boolean              @default(true)
   types       TypesOnOptionals[]
   events      OptionalsOnEvents[]
@@ -94,7 +91,6 @@ model Type {
   id         BigInt                @id
   type       String
   price      Float
-  qtt        Int
   active     Boolean               @default(true)
   optional   TypesOnOptionals[]
 
@@ -123,6 +119,7 @@ model Event {
   partyTheme     String?
   responsible    String?
   structure      String?
+  totalAmount    Float
   contract       String?
   obs            String?
   client         Client              @relation(fields: [clientId], references: [id])

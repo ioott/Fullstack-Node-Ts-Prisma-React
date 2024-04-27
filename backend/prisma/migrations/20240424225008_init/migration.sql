@@ -17,8 +17,8 @@ CREATE TABLE "buffets" (
     "description" TEXT NOT NULL,
     "active" BOOLEAN NOT NULL DEFAULT true,
     "eventId" BIGINT,
-    "durationId" BIGINT,
-    "guestsQttId" BIGINT
+    "durationId" BIGINT NOT NULL,
+    "guestsQttId" BIGINT NOT NULL
 );
 
 -- CreateTable
@@ -63,7 +63,6 @@ CREATE TABLE "opcionais" (
     "id" BIGINT NOT NULL PRIMARY KEY,
     "name" TEXT NOT NULL,
     "description" TEXT NOT NULL,
-    "qtt" INTEGER NOT NULL,
     "active" BOOLEAN NOT NULL DEFAULT true
 );
 
@@ -72,7 +71,6 @@ CREATE TABLE "tipos_para_opcionais" (
     "id" BIGINT NOT NULL PRIMARY KEY,
     "type" TEXT NOT NULL,
     "price" REAL NOT NULL,
-    "qtt" INTEGER NOT NULL,
     "active" BOOLEAN NOT NULL DEFAULT true
 );
 
@@ -99,6 +97,7 @@ CREATE TABLE "eventos" (
     "partyTheme" TEXT,
     "responsible" TEXT,
     "structure" TEXT,
+    "totalAmount" REAL NOT NULL,
     "contract" TEXT,
     "obs" TEXT,
     "clientId" BIGINT NOT NULL,
