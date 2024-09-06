@@ -4,19 +4,19 @@ Este projeto é uma aplicação fullstack para o gerenciamento de uma empresa de
 
 ## Índice
 
-- [Visão Geral](#visao-geral)
+- [Visão Geral](#visão-geral)
 - [Tecnologias Utilizadas](#tecnologias-utilizadas)
 - [Estrutura do Projeto](#estrutura-do-projeto)
-- [Pré-requisitos](#pre-requisitos)
-- [Instalação](#instalacao)
-- [Configuração](#configuracao)
+- [Pré-requisitos](#pré-requisitos)
+- [Instalação](#instalação)
+- [Configuração](#configuração)
 - [Executando o Projeto](#executando-o-projeto)
-- [Scripts Disponíveis](#scripts-disponiveis)
+- [Scripts Disponíveis](#scripts-disponíveis)
 - [API Endpoints](#api-endpoints)
 - [Modelo de Dados](#modelo-de-dados)
-- [Containerização](#containerizacao)
+- [Containerização](#containerização)
 - [Testes](#testes)
-- [Licença](#licenca)
+- [Licença](#licença)
 
 ## Visão Geral
 
@@ -107,35 +107,35 @@ Em construção.
 ## Configuração
 
 - Backend:
-- Crie um arquivo `.env` na pasta `backend` com as variáveis de ambiente necessárias, incluindo `DATABASE_URL` para o SQLite. Exemplo:
-  ```
-  DATABASE_URL="file:./dev.db"
-  PORT=3000
-  NODE_ENV=development
-  ```
-- Execute as migrações do Prisma para configurar o banco de dados:
-  ```
-  npx prisma migrate dev
-  ```
+   - Crie um arquivo `.env` na pasta `backend` com as variáveis de ambiente necessárias, incluindo `DATABASE_URL` para o SQLite. Exemplo:
+     ```
+     DATABASE_URL="file:./dev.db"
+     PORT=3000
+     NODE_ENV=development
+     ```
+   - Execute as migrações do Prisma para configurar o banco de dados:
+     ```
+     npx prisma migrate dev
+     ```
 
 - Frontend:
-- Não requer configuração adicional neste estágio.
+   - Não requer configuração adicional neste estágio.
 
 ## Executando o Projeto
 
 - Usando npm:
-- Inicie o servidor backend:
-   ```
-   cd backend
-   npm run dev
-   ```
+   - Inicie o servidor backend:
+      ```
+      cd backend
+      npm run dev
+      ```
 
 - Usando Docker:
-- Na raiz do projeto, execute:
-   ```
-   docker-compose up --build
-   ```
-Isso irá construir a imagem do Docker e iniciar o backend e o banco de dados.
+   - Na raiz do projeto, execute:
+      ```
+      docker-compose up --build
+      ```
+      Isso irá construir a imagem do Docker e iniciar o backend e o banco de dados.
 
 ## Scripts Disponíveis
 
